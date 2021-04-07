@@ -1,0 +1,71 @@
+package com.bookmymovie;
+
+import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoSettings;
+import org.mockito.quality.Strictness;
+
+import com.bookmymovie.dao.MovieDao;
+import com.bookmymovie.dao.TheatreDao;
+import com.bookmymovie.model.Movie;
+import com.bookmymovie.model.Theatre;
+import com.bookmymovie.service.ShowInChargeImpl;
+
+@MockitoSettings(strictness = Strictness.LENIENT)
+@RunWith(MockitoJUnitRunner.class)
+public class ShowInChargeControllerTest {
+	
+	@InjectMocks
+	ShowInChargeImpl service1;
+	
+	@Mock
+	TheatreDao dao1;
+	
+	@Mock
+	MovieDao dao;
+	
+	@SuppressWarnings("deprecation")
+	@BeforeEach
+	public void init() {
+		System.out.println("** before method ***");
+		MockitoAnnotations.initMocks(this); 
+	}
+
+	@Test
+	public void testaddTheatre() {
+		Theatre theatre=new Theatre(18,"pvr","hyderabad");
+		theatre.setTheatreid(18);
+		theatre.setTheatrename("qwe");
+		theatre.setTheatrename("malkajgiri");
+		dao1.save(theatre);
+	}
+	@Test
+	public void updateTheatre() {
+		Theatre theatre = new Theatre(35,"mvrmall","bangalore");
+		dao1.findById(35);
+		dao1.save(theatre);
+	   Mockito.verify(dao1, Mockito.times(1)).save(theatre);
+	}
+
+	@Test
+	public void testaddMovie() {
+		Movie movie=new Movie();
+		movie.setMovieId(11);
+		movie.setMovieName("conjuring");
+		dao.save(movie);
+	}
+
+	@Test
+	public void updateMovies() {
+		Movie movie = new Movie();
+		dao.findById(65);
+		dao.save(movie);
+	   Mockito.verify(dao, Mockito.times(1)).save(movie);
+	}
+}
